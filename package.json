@@ -19,7 +19,7 @@
     "test:watch": "karma start --autoWatch=true --singleRun=false"
   },
   "repository": "",
-  "keywords": [],
+  "keywosrds": [],
   "author": "Your name here",
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
