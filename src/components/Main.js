@@ -66,7 +66,7 @@ class ImgFigure extends React.Component{
       <figure onClick={this.handleClick.bind(this)} className={imgFigureClassName} style={styleObj} ref="figure">
         <img src={this.props.data.imageURL} alt={this.props.data.title}/>
         <figcaption>
-          <h2 className="img-title"></h2>
+          <h2 className="img-title">{this.props.data.title}</h2>
           <div className="img-back" onClick={this.handleClick.bind(this)}>
             <p>
               {this.props.data.desc}
