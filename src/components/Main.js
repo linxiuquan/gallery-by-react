@@ -176,7 +176,6 @@ class AppComponent extends React.Component {
 
 
   rearrange(centerIndex) {
-
     let imgsArrangeArr = this.state.imgsArrangeArr,
 
         Constant = this.Constant,
@@ -202,11 +201,11 @@ class AppComponent extends React.Component {
         };
 
         // 取出要布局上侧图片的状态信息
-        topImgSpliceIndex = Math.ceil(Math.random() * (imgsArrangeArr.length - topImgNum));
+        topImgSpliceIndex = Math.floor(Math.random() * (imgsArrangeArr.length - topImgNum));
         imgsArrangeTopArr = imgsArrangeArr.splice(topImgSpliceIndex, topImgNum);
 
         // 布局位于上侧的图片
-        imgsArrangeArr.forEach((value, index) => {
+        imgsArrangeTopArr.forEach((value, index) => {
           imgsArrangeTopArr[index] = {
             pos: {
               top: getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1]),
@@ -249,7 +248,8 @@ class AppComponent extends React.Component {
 
         this.setState({
           imgsArrangeArr: imgsArrangeArr
-        })
+        });
+
   }
 
 
@@ -315,8 +315,20 @@ class AppComponent extends React.Component {
 
       }
 
-      imgFigures.push(<ImgFigure key = {index} data={value} ref={'imgFigure' + index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index).bind(this)} center={this.center(index).bind(this)}/>);
-      controllerUnits.push(<ControllerUnit key = {index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index).bind(this)} center={this.center(index).bind(this)}/>);
+      imgFigures.push(
+        <ImgFigure
+          key = {index}
+          data={value}
+          ref={'imgFigure' + index}
+          arrange={this.state.imgsArrangeArr[index]}
+          inverse={this.inverse(index).bind(this)}
+          center={this.center(index).bind(this)}/>);
+      controllerUnits.push(
+        <ControllerUnit
+          key = {index}
+          arrange={this.state.imgsArrangeArr[index]}
+          inverse={this.inverse(index).bind(this)}
+          center={this.center(index).bind(this)}/>);
     }.bind(this));
 
     return (
