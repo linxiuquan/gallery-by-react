@@ -20,6 +20,7 @@
   },
   "repository": "",
   "keywosrds": [],
+  "devtool" :"source-map",
   "author": "Your name here",
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
