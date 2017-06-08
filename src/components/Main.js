@@ -29,6 +29,12 @@ const  get30DegRandom = () => {
   return ((Math.random() > 0.5 ? '' : '-') + Math.ceil(Math.random()*30));
 };
 
+class ImgBack extends React.Component{
+  render(){
+    return (<p>{this.props.data}</p>);
+  }
+}
+
 class ImgFigure extends React.Component{
   /*
    * imgFigure的点击处理函数
@@ -59,8 +65,37 @@ class ImgFigure extends React.Component{
       }.bind(this));
 
     }
+    let _desc = this.props.data.desc;
+    function searchSubStr(str,subStr){
+      let pos = str.indexOf(subStr);
+      while(pos>-1){
+        positions.push(pos);
+        pos = str.indexOf(subStr,pos+1);
+      }
+    }
+    let positions = new Array();
 
-    var imgFigureClassName = 'img-figure' + (this.props.arrange.isInverse ? ' is-inverse' : '');
+    searchSubStr(_desc,' ');
+    let textList = new Array();
+    for(let i =0; i<positions.length;i++){
+      let position = positions[i];
+      if (i == 0){
+        textList.push(<ImgBack data={_desc.slice(0,position)}></ImgBack>);
+        if(positions.length==1){
+          textList.push(<ImgBack data={_desc.slice(position+1,_desc.length)}></ImgBack>);
+        }
+      }  else {
+        textList.push(<ImgBack data={_desc.slice(positions[i-1]+1,position)}></ImgBack>);
+        if(i==positions.length-1){
+          textList.push(<ImgBack data={_desc.slice(positions[i]+1,_desc.length)}></ImgBack>);
+
+        }
+      }
+    }
+    if (positions.length==0){
+      textList = _desc;
+    }
+    let imgFigureClassName = 'img-figure' + (this.props.arrange.isInverse ? ' is-inverse' : '');
 
     return (
       <figure onClick={this.handleClick.bind(this)} className={imgFigureClassName} style={styleObj} ref="figure">
@@ -68,9 +103,7 @@ class ImgFigure extends React.Component{
         <figcaption>
           <h2 className="img-title">{this.props.data.title}</h2>
           <div className="img-back" onClick={this.handleClick.bind(this)}>
-            <p>
-              {this.props.data.desc}
-            </p>
+            {textList}
           </div>
         </figcaption>
       </figure>
@@ -330,7 +363,6 @@ class AppComponent extends React.Component {
           inverse={this.inverse(index).bind(this)}
           center={this.center(index).bind(this)}/>);
     }.bind(this));
-
     return (
       <section className="stage" ref="stage">
         <section className="img-sec">
